@@ -1,0 +1,40 @@
+in this folder i have the the databse design for the app 
+*************************************************************
+Example Queries
+ 1 .Add a team with logo and sport type:
+INSERT INTO Teams (team_name, league, city, logo_url, sport_type) 
+VALUES ('Toronto Raptors', 'NBA', 'Toronto', 'http://example.com/logo.png', 'Basketball');
+
+ 2.Add a user with a profile picture:
+INSERT INTO Users (username, password_hash, email, profile_pic_url) 
+VALUES ('john_doe', 'hashed_password', 'john.doe@example.com', 'http://example.com/profile.jpg');
+
+ 3. Add a game with the date:
+INSERT INTO Games (team_id, opponent, game_date, home_or_away, result, score) 
+VALUES (1, 'New York Knicks', '2024-08-20', 'home', 'win', 110);
+
+ 4. View Games for Followed Teams : 
+SELECT 
+    g.game_id,
+    t.team_name,
+    g.opponent,
+    g.game_date,
+    g.home_or_away,
+    g.result,
+    g.score
+FROM 
+    Games g
+JOIN 
+    Teams t ON g.team_id = t.team_id
+JOIN 
+    User_Teams ut ON t.team_id = ut.team_id
+WHERE 
+    ut.user_id = ?  -- Replace with the user's ID
+ORDER BY 
+    g.game_date;
+
+  5. Follow a Team:
+INSERT INTO User_Teams (user_id, team_id) VALUES (1, 2);  -- User 1 follows Team 2
+
+
+
